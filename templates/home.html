@@ -1,0 +1,99 @@
+<!doctype html>
+<title>Provider Search</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<div class="results">
+  {% if providers %}
+  <table>
+    <h1>Providers:</h1>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Gender</th>
+      <th>Language</th>
+      <th>Active Status</th>
+      <th>Rating</th>
+      <th>Primary Skills</th>
+      <th>Secondary Skills</th>
+    </tr>
+    {% for provider in providers %}
+    <tr>
+      <td>{{provider.id}}</td>
+      <td>{{provider.first_name}} {{provider.last_name}}</td>
+      <td>{{provider.sex}}</td>
+      <td>{{provider.language}}</td>
+      <td>{{provider.active}}</td>
+      <td id="rating">{{provider.rating}} / 10</td>
+      <td>
+        {% for pri_skill in provider.primary_skills %}
+            <ul>
+              <li>{{pri_skill}}</li>
+            </ul>  
+        {% endfor %}
+      </td>
+      <td>
+        {% for sec_skill in provider.secondary_skill %}
+            <ul>
+              <li>{{sec_skill}}</li>
+            </ul>  
+        {% endfor %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <h1>No Results Found</h1>
+{% endif %}
+</div>
+
+<div class="filters">
+  <form action="/results/" method="post">
+    <div class="gender">
+      <h2>Gender:</h2>
+      {% for gen in gender%}
+       <input type="checkbox" name="sex" value={{gen}}>{{gen}}<br>
+      {% endfor %}
+    </div>
+  
+    <div class="active">
+      <h2>Active Status:</h2>
+        <input type="checkbox" name="active" value="active">Active<br>
+        <input type="checkbox" name="active" value="inactive">Inactive<br>
+    </div>
+  
+    <div class="language">
+      <h2><label for="language">Language:</label><h2>
+        <input type="text" id="language" name="language">
+    </div>
+  
+      
+    <div class="primary_skills">
+      <h2>Primary Skills:</h2>
+      <p>Hold CTRL to select multiple options</p>
+      <div>
+        <select id="primary" name="primary" multiple class="form-control">
+            {% for skill in primary_skills %}
+              <option> {{skill}} </option>
+            {% endfor %}
+        </select>
+      </div>
+    </div>
+  
+    <div class="secondary_skills">
+      <h2>Secondary Skills:</h2>
+      <p>Hold CTRL to select multiple options</p>
+      <div>
+        <select id="secondary" name="secondary" multiple class="form-control">
+            {% for skill in secondary_skills %}
+              <option> {{skill}} </option>
+            {% endfor %}
+        </select>
+      </div>
+    </div>
+    <input class="btn" type="submit">
+  </form>
+  
+  <form action="/" method="post">
+    <input class ="btn" type="submit" value="Clear"/>
+  </form>
+</div>

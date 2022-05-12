@@ -1,0 +1,17 @@
+h2, #rating {
+  color: red;
+}
+
+body, html {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.filters {
+  margin: 35px 100px;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
